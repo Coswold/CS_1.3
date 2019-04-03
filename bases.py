@@ -1,4 +1,5 @@
 #!python
+import math
 
 import string
 # Hint: Use these string constants to encode/decode hexadecimal digits and more
@@ -43,8 +44,28 @@ def encode(number, base):
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
     # TODO: Encode number in binary (base 2)
-    total = ""
-    
+    bin = ""
+    if number == base:
+        bin += '10'
+    else:
+        if number % base == 0:
+            while number > 0:
+                if number % base == 0:
+                    bin += '1'
+                else:
+                    bin += '0'
+                print(number)
+                number = number // base
+        else:
+            while number > 0:
+                if number % base == 0:
+                    bin += '0'
+                else:
+                    bin += '1'
+                print(number)
+                number = number // base
+
+    return bin
     # TODO: Encode number in hexadecimal (base 16)
     # ...
     # TODO: Encode number in any base (2 up to 36)
@@ -84,6 +105,7 @@ def main():
     else:
         print('Usage: {} digits base1 base2'.format(sys.argv[0]))
         print('Converts digits from base1 to base2')
+        print(encode(int(args[0]), int(args[1])))
 
 
 if __name__ == '__main__':
