@@ -43,29 +43,17 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
-    # TODO: Encode number in binary (base 2)
-    answer = ""
-    subtraction = base
-    power = math.floor(math.log(number, base))
-    temp = power
-    while temp > 1:
-        subtraction *= base
-        temp -= 1
-    while power >= 0:
-        print('num: ' + str(number) + ' power: ' + str(power) + ' subtraction: ' + str(subtraction))
-        if subtraction <= number:
-            answer += '1'
-            number -= subtraction
+    answer = ''
+    remainder = 0
+    while number > 0:
+        #print('num: ' + str(number) + ' re: ' + str(remainder) + ' answer: ' + str(answer))
+        remainder = number % base
+        number = (number // base)
+        if remainder > 9:
+            answer += str(chr(remainder + 87))
         else:
-            answer += '0'
-        power -= 1
-        subtraction = subtraction // base
-
-    return answer
-    # TODO: Encode number in hexadecimal (base 16)
-    # ...
-    # TODO: Encode number in any base (2 up to 36)
-    # ...
+            answer += str(remainder)
+    return answer[::-1]
 
 
 def convert(digits, base1, base2):
