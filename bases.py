@@ -44,28 +44,24 @@ def encode(number, base):
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
     # TODO: Encode number in binary (base 2)
-    bin = ""
-    if number == base:
-        bin += '10'
-    else:
-        if number % base == 0:
-            while number > 0:
-                if number % base == 0:
-                    bin += '1'
-                else:
-                    bin += '0'
-                print(number)
-                number = number // base
+    answer = ""
+    subtraction = base
+    power = math.floor(math.log(number, base))
+    temp = power
+    while temp > 1:
+        subtraction *= base
+        temp -= 1
+    while power >= 0:
+        print('num: ' + str(number) + ' power: ' + str(power) + ' subtraction: ' + str(subtraction))
+        if subtraction <= number:
+            answer += '1'
+            number -= subtraction
         else:
-            while number > 0:
-                if number % base == 0:
-                    bin += '0'
-                else:
-                    bin += '1'
-                print(number)
-                number = number // base
+            answer += '0'
+        power -= 1
+        subtraction = subtraction // base
 
-    return bin
+    return answer
     # TODO: Encode number in hexadecimal (base 16)
     # ...
     # TODO: Encode number in any base (2 up to 36)
