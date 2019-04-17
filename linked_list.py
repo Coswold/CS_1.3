@@ -93,10 +93,15 @@ class LinkedList(object):
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
+        # Insert at the beginning of list
         if index == 0:
             self.prepend(item)
+
+        # Insert at end of list
         elif index == self.size:
             self.append(item)
+
+        # Traverse to given index and insert 
         else:
             new_node = Node(item)
             node = self.head
@@ -163,8 +168,6 @@ class LinkedList(object):
         using the same node, or raise ValueError if old_item is not found.
         Best case running time: ??? under what conditions? [TODO]
         Worst case running time: ??? under what conditions? [TODO]"""
-        # TODO: Find the node containing the given old_item and replace its
-        # data with new_item, without creating a new node object
         node = self.head
         while node is not None:
             if node.data == old_item:
