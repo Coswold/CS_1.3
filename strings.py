@@ -1,7 +1,8 @@
 #!python
 
 def contains(text, pattern):
-    """Return a boolean indicating whether pattern occurs in text."""
+    """Return a boolean indicating whether pattern occurs in text.
+    Worst case runtime O(n * len(pattern))?"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     i = 0
@@ -20,37 +21,27 @@ def contains(text, pattern):
     return False
 
 
-
 def find_index(text, pattern):
     """Return the starting index of the first occurrence of pattern in text,
-    or None if not found."""
+    or None if not found.
+    Worst case runtime O(n * len(pattern))?"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     i = 0
     answer = []
     if len(pattern) == 0:
         return 0
-    while i < len(text):
-        if text[i] == pattern[0] or text[i]:
-            answer.append(i)
-            j = 0
-            while j < len(pattern):
-                if text[i + j] != pattern[j]:
-                    answer.pop()
-                    break
-                j += 1
-            if j == len(pattern):
-                return answer[0]
-        i += 1
-    return None
-
-
-
+    answer = find_all_indexes(text, pattern)
+    if len(answer) > 0:
+        return answer[0]
+    else:
+        return None
 
 
 def find_all_indexes(text, pattern):
     """Return a list of starting indexes of all occurrences of pattern in text,
-    or an empty list if not found."""
+    or an empty list if not found.
+    Worst case runtime O(n * len(pattern))?"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     i = 0
