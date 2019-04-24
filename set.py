@@ -1,5 +1,7 @@
 #!python
 
+from hashtable import HashTable
+
 """Set implemented with a list"""
 class List_Set(object):
 
@@ -13,12 +15,6 @@ class List_Set(object):
                     self.list.append(element)
                     self.size += 1
 
-    def length(self):
-        length = 0
-        for element in self.list:
-            length += 1
-        return length
-
     def contains(self, element):
         for i in self.list:
             if i == element:
@@ -28,6 +24,7 @@ class List_Set(object):
     def add(self, element):
         if self.contains(element) == False:
             self.list.append(element)
+            self.size += 1
         else:
             raise KeyError('Element already exists in set.')
 
@@ -36,6 +33,7 @@ class List_Set(object):
         while i < len(self.list):
             if self.list[i] == element:
                 self.list.pop(i)
+                self.size -= 1
                 return
         raise KeyError('Element not found in set.')
 
@@ -77,5 +75,43 @@ class List_Set(object):
             i += 1
         return True
 
-Set = List_Set
-# Set = Hash_Set
+"""Set implemented with a hashtable"""
+class Hash_Set(object):
+
+    def __init__(self, elements=None):
+        self.list = HashTable()
+        self.size = 0
+        # Append the given items
+        if elements is not None:
+            for element in elements:
+                self.list.set(element, element)
+                self.size += 1
+
+    def contains(self, element):
+        return self.list.contains(element)
+
+    def add(self, element):
+        if self.contains(element) == False:
+            self.list.set(element, element)
+            self.size += 1
+        else:
+            raise KeyError('Element already exists in set.')
+
+    def remove(self, element):
+        if self.contains(element) == True:
+            self.list.delete(element)
+            self.size -= 1
+        else:
+            raise KeyError('Element not found in set.')
+
+    def intersection(self, other_set):
+        new_set = Hash_Set()
+        items = other_set.items()
+        for item in items:
+            if self.list.contains(item):
+                new_set.add(item)
+        return new_set
+
+
+# Set = List_Set
+Set = Hash_Set
