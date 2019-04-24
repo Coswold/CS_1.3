@@ -91,3 +91,4 @@ class SetTest(unittest.TestCase):
         s = Set(['A', 'B', 'C'])
         other_set = Set(['D'])
         assert s.is_subset(other_set) == False
+        #1234
