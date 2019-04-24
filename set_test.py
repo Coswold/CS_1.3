@@ -25,3 +25,18 @@ class SetTest(unittest.TestCase):
         assert s.length() == 1
         s.remove('B')
         assert s.length() == 0
+
+    def test_add(self):
+        s = Set()
+        s.add('A')
+        assert s.contains('A') == True
+        # How can I test for KeyError?
+        # s.add('A')
+        # s.length() == 1
+
+    def test_remove(self):
+        s = Set(['A', 'B'])
+        assert s.length() == 2
+        s.remove('A')
+        assert s.contains('B')
+        assert s.length() == 1
