@@ -109,9 +109,34 @@ class Hash_Set(object):
                 new_set.add(item)
         return new_set
 
+    def union(self, other_set):
+        new_set = Hash_Set()
+        items = other_set.list.items()
+        for item in items:
+            new_set.add(item)
+        return new_set
 
-Set = List_Set
-# Set = Hash_Set
+    def difference(self, other_set):
+        new_set = Hash_Set()
+        items = other_set.list.items()
+        for item in items:
+            if self.contains(item) == False:
+                new_set.add(item)
+        items = self.list.items()
+        for item in items:
+            if other_set.contains(item) == False:
+                new_set.add(item)
+        return new_set
+
+    def is_subset(self, other_set):
+        items = other_set.list.items()
+        for item in items:
+            if self.contains(item) == False:
+                return False
+        return True
+
+# Set = List_Set
+Set = Hash_Set
 
 if __name__ == '__main__':
     s = Set(['A', 'B', 'C'])
