@@ -40,3 +40,27 @@ class SetTest(unittest.TestCase):
         s.remove('A')
         assert s.contains('B')
         assert s.size == 1
+
+    def test_intersection(self):
+        s = Set(['A', 'B', 'C'])
+        other_set = Set(['A'])
+        intersection = s.intersection(other_set)
+        assert intersection.contains('A') == True
+        other_set = Set(['D'])
+        intersection = s.intersection(other_set)
+        assert intersection.contains('D') == False
+        assert intersection.size == 0
+
+    def test_difference(self):
+        s = Set(['A', 'B', 'C'])
+        other_set = Set(['A', 'D'])
+        difference = s.difference(other_set)
+        assert difference.list == ['D', 'B', 'C']
+        s = Set(['A', 'B', 'C'])
+        other_set = Set(['D', 'E', 'F'])
+        difference = s.difference(other_set)
+        assert difference.list == ['D', 'E', 'F', 'A', 'B', 'C']
+        s = Set(['A', 'B', 'C'])
+        other_set = Set(['A', 'B', 'C'])
+        difference = s.difference(other_set)
+        assert difference.list == []

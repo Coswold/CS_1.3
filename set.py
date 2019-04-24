@@ -40,9 +40,9 @@ class List_Set(object):
     def intersection(self, other_set):
         new_set = List_Set()
         i = 0
-        while i < len(other_set):
-            if self.contains(other_set[i]) == True:
-                new_set.add(other_set[i])
+        while i < other_set.size:
+            if self.contains(other_set.list[i]):
+                new_set.add(other_set.list[i])
             i += 1
         return new_set
 
@@ -57,20 +57,20 @@ class List_Set(object):
     def difference(self, other_set):
         new_set = List_Set()
         i = 0
-        while i < len(other_set):
-            if self.contains(other_set[i]) != True:
-                new_set.add(other_set[i])
+        while i < other_set.size:
+            if self.contains(other_set.list[i]) != True:
+                new_set.add(other_set.list[i])
             i += 1
         i = 0
-        while i < len(self.list):
+        while i < self.size:
             if other_set.contains(self.list[i]) != True:
                 new_set.add(self.list[i])
             i += 1
         return new_set
 
     def is_subset(self, other_set):
-        while i < len(other_set):
-            if self.contains(other_set[i]) != True:
+        while i < other_set.size:
+            if self.contains(other_set.list[i]) != True:
                 return False
             i += 1
         return True
@@ -106,12 +106,15 @@ class Hash_Set(object):
 
     def intersection(self, other_set):
         new_set = Hash_Set()
-        items = other_set.items()
+        items = other_set.list.items()
         for item in items:
             if self.list.contains(item):
                 new_set.add(item)
         return new_set
 
 
-# Set = List_Set
-Set = Hash_Set
+Set = List_Set
+# Set = Hash_Set
+
+if __name__ == '__main__':
+    s = Set(['A', 'B', 'C'])
