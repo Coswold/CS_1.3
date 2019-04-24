@@ -25,8 +25,6 @@ class List_Set(object):
         if self.contains(element) == False:
             self.list.append(element)
             self.size += 1
-        else:
-            raise KeyError('Element already exists in set.')
 
     def remove(self, element):
         i = 0
@@ -47,10 +45,10 @@ class List_Set(object):
         return new_set
 
     def union(self, other_set):
-        new_set = self.list
+        new_set = List_Set(self.list)
         i = 0
-        while i < len(other_set):
-            new_set.add(other_set[i])
+        while i < other_set.size:
+            new_set.add(other_set.list[i])
             i += 1
         return new_set
 
@@ -69,6 +67,7 @@ class List_Set(object):
         return new_set
 
     def is_subset(self, other_set):
+        i = 0
         while i < other_set.size:
             if self.contains(other_set.list[i]) != True:
                 return False
@@ -94,8 +93,6 @@ class Hash_Set(object):
         if self.contains(element) == False:
             self.list.set(element, element)
             self.size += 1
-        else:
-            raise KeyError('Element already exists in set.')
 
     def remove(self, element):
         if self.contains(element) == True:
