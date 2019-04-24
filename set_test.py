@@ -14,6 +14,12 @@ class SetTest(unittest.TestCase):
         assert s.contains('C') == True
         assert s.size == 3
 
+    def test_contains(self):
+        s = Set(['A', 'B', 'C'])
+        assert s.contains('D') == False
+        s = Set([])
+        assert s.contains('D') == False
+
     def test_length(self):
         s = Set()
         assert s.size == 0
@@ -35,7 +41,8 @@ class SetTest(unittest.TestCase):
         s.add('B')
         s.add('B')
         assert s.size == 2
-        assert s.list == ['A', 'B']
+        assert s.contains('A') == True
+        assert s.contains('B') == True
 
     def test_remove(self):
         s = Set(['A', 'B'])
@@ -58,25 +65,38 @@ class SetTest(unittest.TestCase):
         s = Set(['A', 'B', 'C'])
         other_set = Set(['A'])
         union = s.union(other_set)
-        assert union.list == ['A', 'B', 'C']
+        assert union.contains('A') == True
+        assert union.contains('B') == True
+        assert union.contains('C') == True
         s = Set(['A', 'B', 'C'])
         other_set = Set(['D', 'E'])
         union = s.union(other_set)
-        assert union.list == ['A', 'B', 'C', 'D', 'E']
+        assert union.contains('A') == True
+        assert union.contains('B') == True
+        assert union.contains('C') == True
+        assert union.contains('D') == True
+        assert union.contains('E') == True
 
     def test_difference(self):
         s = Set(['A', 'B', 'C'])
         other_set = Set(['A', 'D'])
         difference = s.difference(other_set)
-        assert difference.list == ['D', 'B', 'C']
+        assert difference.contains('D') == True
+        assert difference.contains('B') == True
+        assert difference.contains('C') == True
         s = Set(['A', 'B', 'C'])
         other_set = Set(['D', 'E', 'F'])
         difference = s.difference(other_set)
-        assert difference.list == ['D', 'E', 'F', 'A', 'B', 'C']
+        assert difference.contains('D') == True
+        assert difference.contains('E') == True
+        assert difference.contains('F') == True
+        assert difference.contains('A') == True
+        assert difference.contains('B') == True
+        assert difference.contains('C') == True
         s = Set(['A', 'B', 'C'])
         other_set = Set(['A', 'B', 'C'])
         difference = s.difference(other_set)
-        assert difference.list == []
+        assert difference.size == 0
 
     def test_is_subset(self):
         s = Set(['A', 'B', 'C'])

@@ -103,33 +103,33 @@ class Hash_Set(object):
 
     def intersection(self, other_set):
         new_set = Hash_Set()
-        items = other_set.list.items()
+        items = other_set.list.values()
         for item in items:
             if self.list.contains(item):
                 new_set.add(item)
         return new_set
 
     def union(self, other_set):
-        new_set = Hash_Set()
-        items = other_set.list.items()
+        new_set = Hash_Set(self.list.values())
+        items = other_set.list.values()
         for item in items:
             new_set.add(item)
         return new_set
 
     def difference(self, other_set):
         new_set = Hash_Set()
-        items = other_set.list.items()
+        items = other_set.list.values()
         for item in items:
             if self.contains(item) == False:
                 new_set.add(item)
-        items = self.list.items()
+        items = self.list.values()
         for item in items:
             if other_set.contains(item) == False:
                 new_set.add(item)
         return new_set
 
     def is_subset(self, other_set):
-        items = other_set.list.items()
+        items = other_set.list.values()
         for item in items:
             if self.contains(item) == False:
                 return False
