@@ -77,16 +77,16 @@ class SetTest(unittest.TestCase):
         assert union.contains('D') == True
         assert union.contains('E') == True
 
-    def test_difference(self):
+    def test_symetric_difference(self):
         s = Set(['A', 'B', 'C'])
         other_set = Set(['A', 'D'])
-        difference = s.difference(other_set)
+        difference = s.symetric_difference(other_set)
         assert difference.contains('D') == True
         assert difference.contains('B') == True
         assert difference.contains('C') == True
         s = Set(['A', 'B', 'C'])
         other_set = Set(['D', 'E', 'F'])
-        difference = s.difference(other_set)
+        difference = s.symetric_difference(other_set)
         assert difference.contains('D') == True
         assert difference.contains('E') == True
         assert difference.contains('F') == True
@@ -95,7 +95,7 @@ class SetTest(unittest.TestCase):
         assert difference.contains('C') == True
         s = Set(['A', 'B', 'C'])
         other_set = Set(['A', 'B', 'C'])
-        difference = s.difference(other_set)
+        difference = s.symetric_difference(other_set)
         assert difference.size == 0
 
     def test_is_subset(self):

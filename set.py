@@ -122,6 +122,14 @@ class Hash_Set(object):
         for item in items:
             if self.contains(item) == False:
                 new_set.add(item)
+        return new_set
+
+    def symetric_difference(self, other_set):
+        new_set = Hash_Set()
+        items = other_set.list.values()
+        for item in items:
+            if self.contains(item) == False:
+                new_set.add(item)
         items = self.list.values()
         for item in items:
             if other_set.contains(item) == False:
