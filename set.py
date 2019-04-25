@@ -59,6 +59,15 @@ class List_Set(object):
             if self.contains(other_set.list[i]) != True:
                 new_set.add(other_set.list[i])
             i += 1
+        return new_set
+
+    def symetric_difference(self, other_set):
+        new_set = List_Set()
+        i = 0
+        while i < other_set.size:
+            if self.contains(other_set.list[i]) != True:
+                new_set.add(other_set.list[i])
+            i += 1
         i = 0
         while i < self.size:
             if other_set.contains(self.list[i]) != True:
@@ -143,8 +152,8 @@ class Hash_Set(object):
                 return False
         return True
 
-# Set = List_Set
-Set = Hash_Set
+Set = List_Set
+# Set = Hash_Set
 
 if __name__ == '__main__':
     s = Set(['A', 'B', 'C'])
