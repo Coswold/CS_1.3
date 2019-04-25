@@ -7,20 +7,24 @@ class CircularBufferTest(unittest.TestCase):
 
     def test_init(self):
         s = CircularBuffer()
-        assert len(s.list) == 8
+        assert s.max_size == 8
         assert s.size == 0
-        assert s.current_index == 0
         s = CircularBuffer(3, ['A', 'B', 'C'])
-        assert len(s.list) == 3
+        assert s.max_size == 3
         assert s.size == 3
-        assert s.current_index == 3
+        assert s.list == ['A', 'B', 'C']
         s = CircularBuffer(3, ['A', 'B', 'C', 'D'])
-        assert len(s.list) == 3
+        assert s.max_size == 3
         assert s.size == 3
-        assert s.current_index == 1
+        assert s.list == ['B', 'C', 'D']
 
     def test_is_empty(self):
         s = CircularBuffer()
-        assert len(s.list) == 8
+        assert s.max_size == 8
         assert s.size == 0
-        assert s.current_index == 0
+        assert s.is_empty() == True
+        s = CircularBuffer(3, ['A', 'B', 'C'])
+        s.dequeue()
+        s.dequeue()
+        s.dequeue()
+        assert s.is_empty() == True
