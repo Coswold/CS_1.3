@@ -28,3 +28,15 @@ class CircularBufferTest(unittest.TestCase):
         s.dequeue()
         s.dequeue()
         assert s.is_empty() == True
+
+    def test_is_full(self):
+        s = CircularBuffer(3, ['A', 'B', 'C'])
+        assert s.is_full() == True
+        assert s.size == 3
+        s = CircularBuffer(3, ['A', 'B', 'C', 'D'])
+        assert s.is_full() == True
+        assert s.size == 3
+        s = CircularBuffer(['A', 'B', 'C'])
+        print(s.list)
+        assert s.is_full() == False
+        assert s.size == 3
