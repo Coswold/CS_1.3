@@ -7,36 +7,66 @@ class CircularBufferTest(unittest.TestCase):
 
     def test_init(self):
         s = CircularBuffer()
-        assert s.max_size == 8
+        assert len(s.list) == 8
         assert s.size == 0
         s = CircularBuffer(3, ['A', 'B', 'C'])
-        assert s.max_size == 3
+        assert len(s.list) == 3
         assert s.size == 3
-        assert s.list == ['A', 'B', 'C']
         s = CircularBuffer(3, ['A', 'B', 'C', 'D'])
-        assert s.max_size == 3
+        assert len(s.list) == 3
         assert s.size == 3
-        assert s.list == ['B', 'C', 'D']
+        assert s.is_full() == True
+        assert s.return_front() == 'D'
+        assert s.list[s.back] == 'B'
 
     def test_is_empty(self):
-        s = CircularBuffer()
-        assert s.max_size == 8
-        assert s.size == 0
-        assert s.is_empty() == True
         s = CircularBuffer(3, ['A', 'B', 'C'])
+        assert s.is_empty() == False
         s.dequeue()
+        assert s.is_empty() == False
         s.dequeue()
+        assert s.is_empty() == False
         s.dequeue()
         assert s.is_empty() == True
+        assert len(s.list) == 3
+        assert s.size == 0
 
     def test_is_full(self):
+        s = CircularBuffer(8, ['A', 'B', 'C'])
+        assert s.is_full() == False
+        s = CircularBuffer(4, ['A', 'B', 'C'])
+        assert s.is_full() == False
         s = CircularBuffer(3, ['A', 'B', 'C'])
         assert s.is_full() == True
-        assert s.size == 3
-        s = CircularBuffer(3, ['A', 'B', 'C', 'D'])
+        s.enqueue('D')
         assert s.is_full() == True
-        assert s.size == 3
-        s = CircularBuffer(['A', 'B', 'C'])
-        print(s.list)
+        s.dequeue()
         assert s.is_full() == False
+
+    def test_enqueue(self):
+        s = CircularBuffer(3, ['A', 'B', 'C'])
+        s.enqueue('D')
+        assert s.return_front() == 'D'
+        s.enqueue('E')
+        assert s.return_front() == 'E'
+        s.enqueue('F')
+        assert s.return_front() == 'F'
+        s.enqueue('G')
+        assert s.return_front() == 'G'
+        s.enqueue('H')
+        assert s.return_front() == 'H'
         assert s.size == 3
+        assert len(s.list) == 3
+
+    def test_dequeue(self):
+        s = CircularBuffer(3, ['A', 'B', 'C'])
+        assert s.dequeue() == 'A'
+        assert s.dequeue() == 'B'
+        assert s.dequeue() == 'C'
+        s.enqueue('D')
+        s.enqueue('E')
+        s.enqueue('F')
+        s.enqueue('G')
+        assert s.dequeue() == 'E'
+        assert s.dequeue() == 'F'
+        assert s.dequeue() == 'G'
