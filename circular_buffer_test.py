@@ -64,9 +64,13 @@ class CircularBufferTest(unittest.TestCase):
         assert s.dequeue() == 'B'
         assert s.dequeue() == 'C'
         s.enqueue('D')
+        print(s.list, s.back)
         s.enqueue('E')
+        print(s.list, s.back)
         s.enqueue('F')
+        print(s.list, s.back)
         s.enqueue('G')
+        print(s.list, s.back)
         assert s.dequeue() == 'E'
         assert s.dequeue() == 'F'
         assert s.dequeue() == 'G'

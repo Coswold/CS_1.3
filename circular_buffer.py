@@ -23,7 +23,8 @@ class CircularBuffer(object):
         self.front += 1
         if self.front  > len(self.list) - 1:
             self.front = 0
-            self.back += 1
+            if self.back < len(self.list) - 2:
+                self.back += 1
         if self.back > len(self.list) - 1:
             self.back = 0
         self.list[self.front] = item
