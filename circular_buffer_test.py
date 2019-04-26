@@ -64,13 +64,34 @@ class CircularBufferTest(unittest.TestCase):
         assert s.dequeue() == 'B'
         assert s.dequeue() == 'C'
         s.enqueue('D')
-        print(s.list, s.back)
         s.enqueue('E')
-        print(s.list, s.back)
         s.enqueue('F')
-        print(s.list, s.back)
         s.enqueue('G')
-        print(s.list, s.back)
         assert s.dequeue() == 'E'
         assert s.dequeue() == 'F'
         assert s.dequeue() == 'G'
+
+    def text_complex_patterns(self):
+        s = CircularBuffer(4)
+        s.enqueue('D')
+        assert s.dequeue() == 'D'
+        assert s.return_front() == None
+        s.enqueue('E')
+        s.enqueue('F')
+        s.enqueue('G')
+        s.enqueue('H')
+        s.enqueue('I')
+        s.enqueue('J')
+        s.enqueue('K')
+        assert s.return_front() == 'K'
+        assert s.list[s.back] == 'H'
+        assert s.dequeue() == 'H'
+        assert s.dequeue() == 'I'
+        assert s.dequeue() == 'J'
+        s.enqueue('L')
+        s.enqueue('M')
+        assert s.return_front() == 'M'
+        assert s.list[s.back] == 'K'
+        assert s.is_full() == False
+        assert s.is_empty() == False
+        assert s.size == 3
