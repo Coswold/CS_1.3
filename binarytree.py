@@ -219,25 +219,42 @@ class BinarySearchTree(object):
         # TODO: Use helper methods and break this algorithm down into 3 cases
         # based on how many children the node containing the given item has and
         # implement new helper methods for subtasks of the more complex cases
-        parent = self._find_parent_node_recursive(item, node)
+        parent = self._find_parent_node_recursive(item, self.root)
         if parent == None:
             parent = self.root
-        # Check left data
+        if parent.data == item:
+            search = parent.right
+            while search.left != None:
+                search = search.left
+            parent.data = search.data
+            parent.right = None
+            return
         if parent.left.data == item:
-            # Node has no children
-            if parent.left.left == None and parent.left.right == None:
-                parent.left = None
-            # Node has two children
-            elif parent.left.left != None and parent.left.right != None:
-                search = parent.right
-                while search.left != None:
-                    search = search.left
-                parent = search
-                search = None
-            # Node has one child
-
+            node = parent.left
         else:
-            raise ValueError('Item not found in tree.')
+            node = parent.right
+
+        # Node has no children
+        if node.left == None and node.right == None:
+            if parent.left == node:
+                parent.left = None
+            else:
+                parent.right = None
+            return
+        # Node has two children
+        elif node.left != None and node.right != None:
+            search = parent.right
+            while search.left != None:
+                search = search.left
+            parent.data = search.data
+            search = None
+            return
+        # Node has one child
+        else:
+            parent.left = parent.left.left
+            return
+
+        raise ValueError('Item not found in tree.')
 
     def items_in_order(self):
         """Return an in-order list of all items in this binary search tree."""
