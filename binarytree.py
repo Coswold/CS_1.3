@@ -212,6 +212,12 @@ class BinarySearchTree(object):
             # Recursively descend to the node's right child, if it exists
             return self._find_parent_node_recursive(item, node.right, node)
 
+    def _find_successor(self, node):
+        current = node
+        while current.left != None:
+            current = current.left
+        return current
+
     def delete(self, item):
         """Remove given item from this tree, if present, or raise ValueError.
         TODO: Best case running time: ??? under what conditions?
@@ -221,37 +227,31 @@ class BinarySearchTree(object):
         # implement new helper methods for subtasks of the more complex cases
         parent = self._find_parent_node_recursive(item, self.root)
         if parent == None:
-            parent = self.root
-        if parent.data == item:
-            if parent.is_leaf():
-                parent.data = None
-                return
-            search = parent.right
-            while search.left != None:
-                search = search.left
-            parent.data = search.data
-            parent.right = None
-            return
-        if parent.left.data == item:
+            node = self.root
+        elif parent.left.data == item:
             node = parent.left
         else:
             node = parent.right
 
         # Node has no children
         if node.is_leaf():
-            if parent.left == node:
+            if node == self.root:
+                self.root.data = None
+            elif parent.left == node:
                 parent.left = None
             else:
                 parent.right = None
             return
+
         # Node has two children
         elif node.left != None and node.right != None:
-            search = parent.right
-            while search.left != None:
-                search = search.left
-            parent.data = search.data
-            search = None
+            if parent == None:
+                parent = node
+            successor = self._find_successor(node.right)
+            self.delete(successor.data)
+            node.data = successor.data
             return
+
         # Node has one child
         else:
             if parent.left == node:
