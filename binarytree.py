@@ -223,6 +223,9 @@ class BinarySearchTree(object):
         if parent == None:
             parent = self.root
         if parent.data == item:
+            if parent.is_leaf():
+                parent.data = None
+                return
             search = parent.right
             while search.left != None:
                 search = search.left
@@ -235,7 +238,7 @@ class BinarySearchTree(object):
             node = parent.right
 
         # Node has no children
-        if node.left == None and node.right == None:
+        if node.is_leaf():
             if parent.left == node:
                 parent.left = None
             else:
@@ -251,8 +254,18 @@ class BinarySearchTree(object):
             return
         # Node has one child
         else:
-            parent.left = parent.left.left
+            if parent.left == node:
+                if node.left != None:
+                    parent.left = node.left
+                else:
+                    parent.left = node.right
+            else:
+                if node.right != None:
+                    parent.right = node.right
+                else:
+                    parent.right = node.left
             return
+
 
         raise ValueError('Item not found in tree.')
 
